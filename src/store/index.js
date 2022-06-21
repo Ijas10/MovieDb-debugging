@@ -9,18 +9,15 @@ const store = createStore({
   },
   mutations: {
     fetchingMutations : (state,data) => state.allMovies = data ,
-    addingtoFavMutations(state,data) {
+    addingtoFavMutations : (state,data)  => {
         console.log("state", state.allMovies)
-        const mapping2 = state.allMovies.map(each => {
+        state.allMovies = state.allMovies.map(each => {
             if(each.id==data){
                 return {...each, marked : true}
             } else {
                 return each
             }
         })
-        const rawObjectOrArray=  JSON.parse(JSON.stringify(mapping2))
-       
-        state.allMovies = rawObjectOrArray
         console.log("final", state.allMovies)
     }   
         
@@ -35,13 +32,14 @@ const store = createStore({
       this.commit("fetchingMutations", mapping);
       console.log("created", mapping);
     },
-    addingFavouritesAction(id) {
-        console.log("idof", id)
-       this.commit("addingtoFavMutations", id)
+    addingFavouritesAction(context,data) {
+        console.log("idof", data.id)
+       context.commit("addingtoFavMutations", data.id)
     }
   },
   getters: {
     allMoviesGetter: (state) => state.allMovies,
+    favoriteMovies : (state) => state.allMovies.filter(each => each.marked == "true")
   },
 })
 

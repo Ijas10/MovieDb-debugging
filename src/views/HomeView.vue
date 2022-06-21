@@ -14,7 +14,7 @@ export default {
     methods : {
       ...mapActions(["fetchingUpi"])
     },
-    mounted() {
+    created() {
       this.fetchingUpi()
     }
 }
